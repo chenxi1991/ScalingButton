@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ScalingButton">
+        <attr name="unselected_image" format="reference" />
+        <attr name="selected_image" format="reference" />
+        <attr name="duration" format="integer" />
+        <attr name="state" format="boolean" />
+    </declare-styleable>
+</resources>
