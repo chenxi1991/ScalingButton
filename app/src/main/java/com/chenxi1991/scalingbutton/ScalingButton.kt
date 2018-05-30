@@ -2,6 +2,11 @@ package com.chenxi1991.scalingbutton
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ScaleDrawable
@@ -9,7 +14,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.util.AttributeSet
-import android.view.Gravity
 import android.widget.ImageButton
 
 class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) : ImageButton(context, attributeSet, defStyleAttr) {
@@ -23,7 +27,6 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
     private var animationDuration: Int
     private var mState: Boolean = false
 
-    private val tempDrawable: Drawable
     private val unselectedDrawable: Drawable
     private val selectedDrawable: Drawable
 
@@ -37,8 +40,7 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
         if (unselectedImageId == -1 || selectedImageId == -1 || animationDuration == -1)
             throw IllegalArgumentException()
 
-        this.tempDrawable = resources.getDrawable(unselectedImageId, null)
-        this.unselectedDrawable = ScaleDrawable(tempDrawable, Gravity.CENTER, 0.2f, 0.2f)
+        this.unselectedDrawable = makeScaledDrawable(unselectedImageId)
         this.selectedDrawable = resources.getDrawable(selectedImageId, null)
         this.interpolator = FastOutSlowInInterpolator()
 
@@ -85,6 +87,20 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
             setImageDrawable(LayerDrawable(arrayOf(td, fd)))
         })
         animator.start()
+    }
+
+    private fun makeScaledDrawable(id: Int): Drawable {
+        val bm = BitmapFactory.decodeResource(resources, id)
+        val matrix = Matrix()
+        matrix.postScale(0.8f, 0.8f)
+        val newBm = Bitmap.createBitmap(bm, 0, 0, bm.width, bm.height, matrix, true)
+
+        val bgBm = Bitmap.createBitmap(bm.width, bm.height, Bitmap.Config.ARGB_8888)
+        bgBm.setHasAlpha(true)
+        val canvas = Canvas(bgBm)
+        canvas.drawBitmap(newBm, bm.width * 0.1f, bm.height * 0.1f, null)
+
+        return BitmapDrawable(resources, bgBm)
     }
 
     private fun makeDrawable(drawable: Drawable, scale: Float, alpha: Float): Drawable {

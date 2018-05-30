@@ -5,8 +5,8 @@
     android:layout_height="match_parent">
 
     <com.chenxi1991.scalingbutton.ScalingButton
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_centerInParent="true"
         app:duration="300"
         app:selected_image="@mipmap/btn_normal_pen_selected"
