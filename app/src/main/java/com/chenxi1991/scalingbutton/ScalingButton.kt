@@ -114,16 +114,6 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
         return mState
     }
 
-    public fun setState(state: Boolean) {
-        if (this.mState == state) return
-        this.mState = state
-        if (mState) {
-            animate(unselectedDrawable, selectedDrawable)
-        } else {
-            animate(selectedDrawable, unselectedDrawable)
-        }
-    }
-
     public fun toggleState() {
         if (mState) {
             mState = false
