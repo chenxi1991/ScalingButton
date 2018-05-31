@@ -4,12 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.chenxi1991.scalingbutton.ScalingButton
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:duration="300"
-        app:selected_image="@mipmap/btn_normal_pen_selected"
-        app:state="true"
-        app:unselected_image="@mipmap/btn_normal_pen_unselected" />
+        android:orientation="vertical">
+
+        <com.chenxi1991.scalingbutton.ScalingButton
+            android:id="@+id/btn1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:duration="300"
+            app:selected_image="@mipmap/btn_normal_pen_selected"
+            app:state="true"
+            app:unselected_image="@mipmap/btn_normal_pen_unselected" />
+
+        <com.chenxi1991.scalingbutton.ScalingButton
+            android:id="@+id/btn2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:duration="300"
+            app:selected_image="@mipmap/btn_normal_pen_selected"
+            app:state="false"
+            app:unselected_image="@mipmap/btn_normal_pen_unselected" />
+    </LinearLayout>
 </RelativeLayout>

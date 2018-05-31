@@ -49,10 +49,6 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
         } else {
             setImageDrawable(unselectedDrawable)
         }
-
-        this.setOnClickListener({
-            toggleState()
-        })
     }
 
     override fun onSaveInstanceState(): Parcelable {
@@ -110,11 +106,11 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
         return scaleDrawable
     }
 
-    public fun getState(): Boolean {
+    fun getState(): Boolean {
         return mState
     }
 
-    public fun toggleState() {
+    fun toggleState() {
         if (mState) {
             mState = false
             animate(unselectedDrawable, selectedDrawable)
