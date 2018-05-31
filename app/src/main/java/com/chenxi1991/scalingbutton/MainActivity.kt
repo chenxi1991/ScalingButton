@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
             if (btn1.getState()) {
                 if (state == 0) {
                     state = 1
-                    btn1.setImageResources(R.mipmap.eraser_point_pre, R.mipmap.eraser_point_nor)
+                    btn1.changeImageResources(R.mipmap.eraser_point_pre, R.mipmap.eraser_point_nor)
                 } else {
                     state = 0
-                    btn1.setImageResources(R.mipmap.hardpen_pre, R.mipmap.hardpen_nor)
+                    btn1.changeImageResources(R.mipmap.hardpen_pre, R.mipmap.hardpen_nor)
                 }
             } else {
                 btn1.toggleState()
