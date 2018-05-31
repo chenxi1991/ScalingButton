@@ -15,17 +15,17 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:duration="300"
-            app:selected_image="@mipmap/btn_normal_pen_selected"
+            app:selected_image="@mipmap/hardpen_pre"
             app:state="true"
-            app:unselected_image="@mipmap/btn_normal_pen_unselected" />
+            app:unselected_image="@mipmap/hardpen_nor" />
 
         <com.chenxi1991.scalingbutton.ScalingButton
             android:id="@+id/btn2"
             android:layout_width="80dp"
             android:layout_height="80dp"
             app:duration="300"
-            app:selected_image="@mipmap/btn_normal_pen_selected"
+            app:selected_image="@mipmap/eraser_point_pre"
             app:state="false"
-            app:unselected_image="@mipmap/btn_normal_pen_unselected" />
+            app:unselected_image="@mipmap/eraser_point_nor" />
     </LinearLayout>
 </RelativeLayout>

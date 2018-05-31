@@ -12,6 +12,7 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ScaleDrawable
 import android.os.Bundle
 import android.os.Parcelable
+import android.support.annotation.DrawableRes
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.util.AttributeSet
 import android.widget.ImageButton
@@ -27,8 +28,9 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
     private var animationDuration: Int
     private var mState: Boolean = false
 
-    private val unselectedDrawable: Drawable
-    private val selectedDrawable: Drawable
+    private var unselectedDrawable: Drawable
+    private var selectedDrawable: Drawable
+    private var selectedDrawableTemp: Drawable
 
     init {
         val array = context.obtainStyledAttributes(attributeSet, R.styleable.ScalingButton, 0, 0)
@@ -42,6 +44,7 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
 
         this.unselectedDrawable = makeScaledDrawable(unselectedImageId)
         this.selectedDrawable = resources.getDrawable(selectedImageId, null)
+        this.selectedDrawableTemp = resources.getDrawable(selectedImageId, null)
         this.interpolator = FastOutSlowInInterpolator()
 
         if (mState) {
@@ -71,21 +74,21 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
         }
     }
 
-    private fun animate(from: Drawable, to: Drawable) {
+    private fun animate(show: Drawable, hide: Drawable) {
         val animator = ValueAnimator.ofFloat(0f, SCALE_TOTAL)
         animator.duration = animationDuration.toLong()
         animator.interpolator = interpolator
         animator.addUpdateListener({
             val value = it.animatedValue as Float
             val left = SCALE_TOTAL - value
-            val fd = makeDrawable(from, left, value * ALPHA_TOTAL)
-            val td = makeDrawable(to, value, left * ALPHA_TOTAL)
-            setImageDrawable(LayerDrawable(arrayOf(td, fd)))
+            val showDrawable = makeDrawable(show, left, value * ALPHA_TOTAL)
+            val hideDrawable = makeDrawable(hide, value, left * ALPHA_TOTAL)
+            setImageDrawable(LayerDrawable(arrayOf(hideDrawable, showDrawable)))
         })
         animator.start()
     }
 
-    private fun makeScaledDrawable(id: Int): Drawable {
+    private fun makeScaledDrawable(@DrawableRes id: Int): Drawable {
         val bm = BitmapFactory.decodeResource(resources, id)
         val matrix = Matrix()
         matrix.postScale(0.8f, 0.8f)
@@ -118,6 +121,15 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
             mState = true
             animate(selectedDrawable, unselectedDrawable)
         }
+    }
+
+    fun setImageResources(@DrawableRes selectedImageId: Int, @DrawableRes unselectedImageId: Int) {
+        this.selectedImageId = selectedImageId
+        this.selectedDrawable = resources.getDrawable(selectedImageId, null)
+        this.unselectedImageId = unselectedImageId
+        this.unselectedDrawable = makeScaledDrawable(unselectedImageId)
+        animate(selectedDrawable,selectedDrawableTemp)
+        selectedDrawableTemp = resources.getDrawable(selectedImageId, null)
     }
 
 }

@@ -2,12 +2,13 @@ package com.chenxi1991.scalingbutton
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
 
     private val mButtons = mutableListOf<ScalingButton>()
+
+    private var state = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,26 +16,27 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initButtons()
     }
 
-    override fun onClick(v: View?) {
-        resetState(v as ScalingButton)
-    }
 
     private fun initButtons() {
         mButtons.add(btn1)
         mButtons.add(btn2)
-        mButtons.forEach({
-            it.setOnClickListener(this)
-        })
-    }
 
-    private fun resetState(view: ScalingButton) {
-        mButtons.forEach({
-            if (it.id != view.id) {
-                if (it.getState())
-                    it.toggleState()
+        btn1.setOnClickListener({
+            if (btn1.getState()) {
+                if (state == 0) {
+                    state = 1
+                    btn1.setImageResources(R.mipmap.eraser_point_pre, R.mipmap.eraser_point_nor)
+                } else {
+                    state = 0
+                    btn1.setImageResources(R.mipmap.hardpen_pre, R.mipmap.hardpen_nor)
+                }
+            } else {
+                btn1.toggleState()
             }
         })
-        if (!view.getState())
-            view.toggleState()
+
+        btn2.setOnClickListener({
+            btn1.toggleState()
+        })
     }
 }
