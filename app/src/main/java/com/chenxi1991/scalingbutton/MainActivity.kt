@@ -8,8 +8,6 @@ class MainActivity : AppCompatActivity() {
 
     private val mButtons = mutableListOf<ScalingButton>()
 
-    private var state = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,21 +20,27 @@ class MainActivity : AppCompatActivity() {
         mButtons.add(btn2)
 
         btn1.setOnClickListener({
-            if (btn1.getState()) {
-                if (state == 0) {
-                    state = 1
-                    btn1.changeImageResources(R.mipmap.eraser_point_pre, R.mipmap.eraser_point_nor)
-                } else {
-                    state = 0
-                    btn1.changeImageResources(R.mipmap.hardpen_pre, R.mipmap.hardpen_nor)
+            when (btn1.getState()) {
+                true -> {
+                    when ((btn1 as ScalingButton).getCurrentResourceIds()[0]) {
+                        R.mipmap.hardpen_pre -> {
+                            btn1.changeImageResources(R.mipmap.eraser_point_pre, R.mipmap.eraser_point_nor)
+                        }
+                        R.mipmap.eraser_point_pre -> {
+                            btn1.changeImageResources(R.mipmap.hardpen_pre, R.mipmap.hardpen_nor)
+                        }
+                    }
                 }
-            } else {
-                btn1.toggleState()
+                false -> {
+                    btn1.toggleState()
+//                    btn2.toggleState()
+                }
             }
         })
 
         btn2.setOnClickListener({
             btn1.toggleState()
+//            btn2.toggleState()
         })
     }
 }

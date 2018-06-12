@@ -123,12 +123,16 @@ class ScalingButton @JvmOverloads constructor(context: Context, attributeSet: At
         }
     }
 
+    fun getCurrentResourceIds(): List<Int> {
+        return mutableListOf(selectedImageId, unselectedImageId)
+    }
+
     fun changeImageResources(@DrawableRes selectedImageId: Int, @DrawableRes unselectedImageId: Int) {
         this.selectedImageId = selectedImageId
         this.selectedDrawable = resources.getDrawable(selectedImageId, null)
         this.unselectedImageId = unselectedImageId
         this.unselectedDrawable = makeScaledDrawable(unselectedImageId)
-        animate(selectedDrawable,selectedDrawableTemp)
+        animate(selectedDrawable, selectedDrawableTemp)
         selectedDrawableTemp = resources.getDrawable(selectedImageId, null)
     }
 
